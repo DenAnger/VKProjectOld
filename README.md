@@ -31,5 +31,5 @@
 - После обновления до Swift 5 перестал отображаться список друзей
 - Не отображаются картинки в новостях
 
-![] (https://github.com/DenAnger/VKProject/blob/master/Launchboard.png)
+![](https://github.com/DenAnger/VKProject/blob/master/Launchboard.png)
 ![](https://github.com/DenAnger/VKProject/blob/master/News.png)
