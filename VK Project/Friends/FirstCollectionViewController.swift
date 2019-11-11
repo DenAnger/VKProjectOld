@@ -18,7 +18,7 @@ class FirstCollectionViewController: UICollectionViewController {
     var month: String = ""
     
     @IBAction func localNotification(_ sender: Any) {
-    var s = bdate.split(separator: ".")
+        let s = bdate.split(separator: ".")
         switch s[1] {
         case "1":
             month = "January"

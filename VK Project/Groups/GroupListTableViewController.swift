@@ -132,7 +132,7 @@ class GroupListTableViewController: UITableViewController, UISearchResultsUpdati
                     do {
                         let realm = try Realm()
                         realm.beginWrite()
-                        realm.add(group, update: true)
+   //                     realm.add(group, update: true)
                         try realm.commitWrite()
                     } catch {
                         print(error)

@@ -13,7 +13,7 @@ import SwiftyJSON
 
 class LoginFormController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet var webView: WKWebView!
     
     var activityIndicatorView: UIActivityIndicatorView!
     
@@ -74,4 +74,3 @@ var loadGroupsData: Bool? {
         UserDefaults.standard.set(newValue, forKey: "start1")
     }
 }
-
