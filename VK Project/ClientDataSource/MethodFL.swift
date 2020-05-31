@@ -38,5 +38,4 @@ struct MethodFL {
     func getDialogsForListOfMessengerTableViewController() -> URL {
         return URL(string: "\(apiUrl)messages.getDialogs?access_token=\(ClientData.client.access_token)&preview_length=50&v=5.71")!
     }
-    
 }

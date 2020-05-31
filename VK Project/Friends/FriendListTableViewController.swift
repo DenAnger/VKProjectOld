@@ -18,7 +18,7 @@ import UserNotifications
 var cellUsers: [UserData] = []
 
 class FriendListTableViewController: UITableViewController, UISearchResultsUpdating {
-   
+    
     let friendsUtils = FriendsUtils()
     var session: WCSession?
     let dictMessage = ["key1": "value1"]
@@ -27,7 +27,7 @@ class FriendListTableViewController: UITableViewController, UISearchResultsUpdat
     var notificationToken: NotificationToken? = nil
     var friends: Results<UserData>?
     let queue: OperationQueue = {
-    let queue = OperationQueue()
+        let queue = OperationQueue()
         queue.qualityOfService = .userInteractive
         return queue
     }()

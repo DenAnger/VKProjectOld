@@ -10,13 +10,13 @@ import UIKit
 
 class LikeControl: UIControl {
 
-    @IBOutlet weak var likeButton: UIButton! {
+    @IBOutlet var likeButton: UIButton! {
         didSet {
             self.likeButton.setImage(#imageLiteral(resourceName: "unlike"), for: .normal)
             self.likeButton.setImage(#imageLiteral(resourceName: "Like"), for: .selected)
         }
     }
-    @IBOutlet weak var likesLabel: UILabel!
+    @IBOutlet var likesLabel: UILabel!
     
     private var likeCounter = 0 {
         didSet {

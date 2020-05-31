@@ -12,7 +12,7 @@ import SwiftyJSON
 import RealmSwift
 
 class PostViewController: UIViewController {
-    var someLocation: String = ""
+    var someLocation = ""
     
     @IBOutlet weak var textOfPost: UITextField!
     @IBAction func postMyText(_ sender: Any) {
@@ -55,5 +55,4 @@ class PostViewController: UIViewController {
         }
         return str1
     }
-    
 }

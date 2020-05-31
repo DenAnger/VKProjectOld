@@ -148,6 +148,53 @@
 			path = News;
 			sourceTree = "<group>";
 		};
+		6989195224837731002B23A8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				69FD6A302100E55A0059BB7C /* AppDelegate.swift */,
+				69FD6A3C2100E55B0059BB7C /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6989195324837759002B23A8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				69FD6A342100E55A0059BB7C /* Main.storyboard */,
+				6906323B2132797C00A21EB9 /* LaunchScreen.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		69B9BD26248377EA0055ED37 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				69FD6A372100E55B0059BB7C /* Assets.xcassets */,
+				6904B4A3216CCF4400E27F19 /* GoogleService-Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		69B9BD27248378100055ED37 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				69FD6A442100E7AB0059BB7C /* LoginFormController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		69B9BD28248378250055ED37 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6904B4A5216CD0F600E27F19 /* AsyncOperation.swift */,
+				6904B4A7216CD14A00E27F19 /* GetCacheImage.swift */,
+				6999F3BA219FD77D00D28671 /* GetDataOperation.swift */,
+				6904B4A9216CD19100E27F19 /* Utils.swift */,
+				6904B4B3216CE83800E27F19 /* Photo.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		69FD6A242100E55A0059BB7C = {
 			isa = PBXGroup;
 			children = (
@@ -169,22 +216,15 @@
 		69FD6A2F2100E55A0059BB7C /* VK Project */ = {
 			isa = PBXGroup;
 			children = (
-				69FD6A302100E55A0059BB7C /* AppDelegate.swift */,
-				69FD6A342100E55A0059BB7C /* Main.storyboard */,
-				69FD6A442100E7AB0059BB7C /* LoginFormController.swift */,
-				6904B4A5216CD0F600E27F19 /* AsyncOperation.swift */,
-				6904B4A7216CD14A00E27F19 /* GetCacheImage.swift */,
-				6999F3BA219FD77D00D28671 /* GetDataOperation.swift */,
-				6904B4A9216CD19100E27F19 /* Utils.swift */,
-				6904B4B3216CE83800E27F19 /* Photo.swift */,
-				6904B4A3216CCF4400E27F19 /* GoogleService-Info.plist */,
-				69FD6A372100E55B0059BB7C /* Assets.xcassets */,
-				6906323B2132797C00A21EB9 /* LaunchScreen.storyboard */,
-				69FD6A3C2100E55B0059BB7C /* Info.plist */,
+				69B9BD28248378250055ED37 /* Models */,
+				69B9BD27248378100055ED37 /* Controllers */,
+				6989195324837759002B23A8 /* Views */,
 				6904B49E216CCBC000E27F19 /* ClientDataSource */,
 				6945312C2134526B006FEC19 /* Friends */,
 				6945312D21345293006FEC19 /* Groups */,
 				6945312E213452A1006FEC19 /* News */,
+				69B9BD26248377EA0055ED37 /* Resources */,
+				6989195224837731002B23A8 /* Supporting Files */,
 			);
 			path = "VK Project";
 			sourceTree = "<group>";
@@ -476,7 +516,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XJN9TW8RPS;
-				INFOPLIST_FILE = "VK Project/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/VK Project/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -496,7 +536,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XJN9TW8RPS;
-				INFOPLIST_FILE = "VK Project/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/VK Project/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

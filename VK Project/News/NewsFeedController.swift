@@ -12,200 +12,197 @@ import Alamofire
 import SwiftyJSON
 import RealmSwift
 
-private let newsIdentifier = "NewsIdentifier"
 var ViewWidth: CGFloat = 0.0
 
 class NewsFeedController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-
-var news: [News] = []
-let dateFormatter: DateFormatter = {
-    let df = DateFormatter()
-    df.timeStyle = DateFormatter.Style.medium
-    df.dateStyle = DateFormatter.Style.medium
-    return df
-}()
-
-override func viewDidLoad() {
-    super.viewDidLoad()
-    downloadnews()
-    navigationItem.title = "News Feed"
-    collectionView?.backgroundColor = UIColor(white: 0.95, alpha: 1)
-    collectionView?.register(FeedCell.self, forCellWithReuseIdentifier: newsIdentifier)
-}
-
-override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-}
-
-@IBAction func comeBack(segue: UIStoryboardSegue) {
-}
-
-override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return news.count
-}
-
-
-private func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGRect {
-   
-    ///
-  //  let sizeOfText: CGFloat = 0.0
-    ///
     
-    if news[indexPath.row].text != "" {
+    var news: [News] = []
+    let dateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.timeStyle = DateFormatter.Style.medium
+        df.dateStyle = DateFormatter.Style.medium
+        return df
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        downloadnews()
+        navigationItem.title = "News Feed"
+        collectionView?.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        collectionView?.register(FeedCell.self, forCellWithReuseIdentifier: "NewsIdentifier")
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    @IBAction func comeBack(segue: UIStoryboardSegue) {
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return news.count
+    }
+    
+    private func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGRect {
         
         ///
-//        let statusText = news[indexPath.row].text
-//        let rect = NSString(string: statusText).boundingRect(with: CGSize.init(width: view.frame.width, height: 1000), options: NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin), attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)], context: nil)
-      //   sizeOfText = .height + 4 + 24
+        //  let sizeOfText: CGFloat = 0.0
+        ///
+        
+        if news[indexPath.row].text != "" {
+            
+            ///
+            //        let statusText = news[indexPath.row].text
+            //        let rect = NSString(string: statusText).boundingRect(with: CGSize.init(width: view.frame.width, height: 1000), options: NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin), attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)], context: nil)
+            //   sizeOfText = .height + 4 + 24
+            ///
+            
+        }
+        
+        ///
+        //           let knownHeight: CGFloat = 0.0  //8 + 44 + 24 + 8 + 44
+        //    var needToAddHeight: CGFloat = 0.0
+        ///
+        
+        if news[indexPath.row].src != "void" {
+            let image: UIImageView = UIImageView()
+            image.downloadedFrom(link: news[indexPath.row].src)
+            
+            ///
+            //                let imageHeight: CGFloat = CGFloat((news[indexPath.row].srcHeight as NSString).floatValue)
+            //               let imageWidth: CGFloat = CGFloat((news[indexPath.row].srcWidth as NSString).floatValue)
+            //                let scaleX = view.frame.width / imageWidth
+            //         needToAddHeight = imageHeight * scaleX + 4 + 8
+            //           } else {
+            //              needToAddHeight = 0.0
+            ///
+            
+        }
+        ViewWidth = view.frame.width
+        return CGRect(x: 0, y: 0, width: 0, height: 0)
+        
+        ///
+        //    return CGSize(width: view.frame.width, height: sizeOfText + knownHeight + needToAddHeight + 8.4)
         ///
         
     }
     
-    ///
-//           let knownHeight: CGFloat = 0.0  //8 + 44 + 24 + 8 + 44
-//    var needToAddHeight: CGFloat = 0.0
-    ///
-    
-    if news[indexPath.row].src != "void" {
-        let image: UIImageView = UIImageView()
-        image.downloadedFrom(link: news[indexPath.row].src)
-       
-        ///
-//                let imageHeight: CGFloat = CGFloat((news[indexPath.row].srcHeight as NSString).floatValue)
-//               let imageWidth: CGFloat = CGFloat((news[indexPath.row].srcWidth as NSString).floatValue)
-//                let scaleX = view.frame.width / imageWidth
-//         needToAddHeight = imageHeight * scaleX + 4 + 8
-//           } else {
-//              needToAddHeight = 0.0
-        ///
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewsIdentifier", for: indexPath) as! FeedCell
+        cell.profileImageView.downloadedFrom(link: news[indexPath.row].source_avatar)
+        let attributedText = NSMutableAttributedString(string: news[indexPath.row].author, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
+        dateFormatter.timeZone = TimeZone.current
+        let time = dateFormatter.string(from: Date(timeIntervalSince1970: news[indexPath.row].date))
+        attributedText.append(NSAttributedString(string: "\n" + time, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.rgb(red: 155, green: 161, blue: 171)]))
+        cell.nameLabel.attributedText = attributedText
+        if news[indexPath.row].text == "" {
+            cell.statusTextView.text = nil
+        } else {
+            cell.statusTextView.text = news[indexPath.row].text
+        }
+        if news[indexPath.row].src != "void" {
+            cell.statusImageView.downloadedFrom(link: news[indexPath.row].src)
+        } else {
+            cell.statusImageView.image = nil
+        }
+        cell.likesRepostsCommentsLabel.text = "\(news[indexPath.row].likes) Likes  \(news[indexPath.row].reposts) Reposts  \(news[indexPath.row].comments) Comments"
         
+        return cell
     }
-    ViewWidth = view.frame.width
-    return CGRect(x: 0, y: 0, width: 0, height: 0)
     
-    ///
-//    return CGSize(width: view.frame.width, height: sizeOfText + knownHeight + needToAddHeight + 8.4)
-    ///
-    
-}
-
-
-override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: newsIdentifier, for: indexPath) as! FeedCell
-    cell.profileImageView.downloadedFrom(link: news[indexPath.row].source_avatar)
-    let attributedText = NSMutableAttributedString(string: news[indexPath.row].author, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
-    dateFormatter.timeZone = TimeZone.current
-    let time = dateFormatter.string(from: Date(timeIntervalSince1970: news[indexPath.row].date))
-    attributedText.append(NSAttributedString(string: "\n" + time, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.rgb(red: 155, green: 161, blue: 171)]))
-    cell.nameLabel.attributedText = attributedText
-    if news[indexPath.row].text == "" {
-        cell.statusTextView.text = nil
-    } else {
-        cell.statusTextView.text = news[indexPath.row].text
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        collectionView?.collectionViewLayout.invalidateLayout()
     }
-    if news[indexPath.row].src != "void" {
-        cell.statusImageView.downloadedFrom(link: news[indexPath.row].src)
-    } else {
-        cell.statusImageView.image = nil
-    }
-    cell.likesRepostsCommentsLabel.text = "\(news[indexPath.row].likes) Likes  \(news[indexPath.row].reposts) Reposts  \(news[indexPath.row].comments) Comments"
-    
-    return cell
-}
-
-override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-    super.viewWillTransition(to: size, with: coordinator)
-    collectionView?.collectionViewLayout.invalidateLayout()
-}
-func downloadnews() {
-    DispatchQueue.global(qos: .userInteractive).async {
-        Alamofire.request(MethodFL().getNewsForListOfNewsDataTableViewController(), method: .get).responseJSON(queue: concurrentQueue) { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                for (_, subJSON) in json["response"]["items"] {
-                    let tmp = News()
-                    tmp.text = subJSON["text"].stringValue
-                    if subJSON["source_id"].intValue > 0 {
-                        self.alamofireGetUserName(url: self.getUserName(userid: subJSON["source_id"].stringValue), tmp: tmp)
-                    } else if subJSON["source_id"].intValue < 0 {
-                        let someint = subJSON["source_id"].intValue
-                        let someString = String(someint * (-1))
-                        self.alamofireGetGroupName(url: self.getGroupName(groupid: someString), tmp: tmp)
-                    } else {
-                        tmp.author = "author"
+    func downloadnews() {
+        DispatchQueue.global(qos: .userInteractive).async {
+            Alamofire.request(MethodFL().getNewsForListOfNewsDataTableViewController(), method: .get).responseJSON(queue: concurrentQueue) { response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                    for (_, subJSON) in json["response"]["items"] {
+                        let tmp = News()
+                        tmp.text = subJSON["text"].stringValue
+                        if subJSON["source_id"].intValue > 0 {
+                            self.alamofireGetUserName(url: self.getUserName(userid: subJSON["source_id"].stringValue), tmp: tmp)
+                        } else if subJSON["source_id"].intValue < 0 {
+                            let someint = subJSON["source_id"].intValue
+                            let someString = String(someint * (-1))
+                            self.alamofireGetGroupName(url: self.getGroupName(groupid: someString), tmp: tmp)
+                        } else {
+                            tmp.author = "author"
+                        }
+                        tmp.date = subJSON["date"].doubleValue
+                        tmp.comments = subJSON["comments"]["count"].stringValue
+                        tmp.likes = subJSON["likes"]["count"].stringValue
+                        tmp.reposts = subJSON["reposts"]["count"].stringValue
+                        if subJSON["attachments"][0]["photo"]["photo_604"].stringValue != "" {
+                            tmp.src = subJSON["attacments"][0]["photo"]["photo_604"].stringValue
+                            tmp.srcHeight = subJSON["attacments"][0]["photo"]["height"].stringValue
+                            tmp.srcWidth = subJSON["attacments"][0]["photo"]["width"].stringValue
+                        } else {
+                            tmp.src = "void"
+                        }
+                        self.news.append(tmp)
+                        DispatchQueue.main.async {
+                            self.collectionView?.reloadData()
+                        }
                     }
-                    tmp.date = subJSON["date"].doubleValue
-                    tmp.comments = subJSON["comments"]["count"].stringValue
-                    tmp.likes = subJSON["likes"]["count"].stringValue
-                    tmp.reposts = subJSON["reposts"]["count"].stringValue
-                    if subJSON["attachments"][0]["photo"]["photo_604"].stringValue != "" {
-                        tmp.src = subJSON["attacments"][0]["photo"]["photo_604"].stringValue
-                        tmp.srcHeight = subJSON["attacments"][0]["photo"]["height"].stringValue
-                        tmp.srcWidth = subJSON["attacments"][0]["photo"]["width"].stringValue
-                    } else {
-                        tmp.src = "void"
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    func getUserName(userid: String) -> URL {
+        return URL(string: "https://api.vk.com/method/users.get?user_id=\(userid)&fields=photo_100&v=5.71&access_token=\(ClientData.client.access_token)")!
+    }
+    
+    func getGroupName(groupid: String) -> URL {
+        return URL(string: "https://api.vk.com/method/groups.getById?group_id=\(groupid)&v=5.71&access_token=\(ClientData.client.access_token)")!
+    }
+    
+    func alamofireGetUserName(url: URL, tmp: News) {
+        DispatchQueue.global(qos: .userInteractive).async {
+            Alamofire.request(url, method: .get).responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                    for (_, subJSON) in json["response"] {
+                        tmp.author = subJSON["first_name"].stringValue + subJSON["last_name"].stringValue
+                        tmp.source_avatar = subJSON["photo_100"].stringValue
                     }
-                    self.news.append(tmp)
                     DispatchQueue.main.async {
                         self.collectionView?.reloadData()
                     }
+                case .failure(let error):
+                    print(error)
                 }
-            case .failure(let error):
-                print(error)
             }
         }
     }
-}
-
-func getUserName(userid: String) -> URL {
-    return URL(string: "https://api.vk.com/method/users.get?user_id=\(userid)&fields=photo_100&v=5.71&access_token=\(ClientData.client.access_token)")!
-}
-
-func getGroupName(groupid: String) -> URL {
-    return URL(string: "https://api.vk.com/method/groups.getById?group_id=\(groupid)&v=5.71&access_token=\(ClientData.client.access_token)")!
-}
-
-func alamofireGetUserName(url: URL, tmp: News) {
-    DispatchQueue.global(qos: .userInteractive).async {
-        Alamofire.request(url, method: .get).responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                for (_, subJSON) in json["response"] {
-                    tmp.author = subJSON["first_name"].stringValue + subJSON["last_name"].stringValue
-                    tmp.source_avatar = subJSON["photo_100"].stringValue
+    
+    func alamofireGetGroupName(url: URL, tmp: News) {
+        DispatchQueue.global(qos: .userInteractive).async {
+            Alamofire.request(url, method: .get).responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                    for (_, subJSON) in json["response"] {
+                        print(subJSON)
+                        tmp.author = subJSON["name"].stringValue
+                        tmp.source_avatar = subJSON["photo_200"].stringValue
+                    }
+                    DispatchQueue.main.async {
+                        self.collectionView?.reloadData()
+                    }
+                case .failure(let error):
+                    print(error)
                 }
-                DispatchQueue.main.async {
-                    self.collectionView?.reloadData()
-                }
-            case .failure(let error):
-                print(error)
             }
         }
     }
-}
-
-func alamofireGetGroupName(url: URL, tmp: News) {
-    DispatchQueue.global(qos: .userInteractive).async {
-        Alamofire.request(url, method: .get).responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                for (_, subJSON) in json["response"] {
-                    print(subJSON)
-                    tmp.author = subJSON["name"].stringValue
-                    tmp.source_avatar = subJSON["photo_200"].stringValue
-                }
-                DispatchQueue.main.async {
-                    self.collectionView?.reloadData()
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-}
 }
 
 class FeedCell: UICollectionViewCell {
